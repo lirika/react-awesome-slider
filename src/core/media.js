@@ -12,7 +12,7 @@ export default class Media extends React.Component {
 
     let background = null;
     if (media.url) {
-      if (media.url.match(/\.(mp4|webm)/)) {
+      if ((media.ext && ['mp4', 'webm'].includes(media.ext)) || media.url.match(/\.(mp4|webm)/)) {
         background = (
           <video
             title={media.title}

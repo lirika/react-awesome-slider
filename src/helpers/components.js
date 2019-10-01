@@ -19,19 +19,19 @@ export class MediaLoader {
     this.image.onload = () => this.resolve && this.resolve(true);
     this.image.onerror = () => this.resolve && this.resolve(false);
   }
-  load(url) {
+  load(media) {
     return new Promise(resolve => {
-      if (!url) {
+      if (!media.url) {
         resolve(true);
       }
       this.resolve = resolve;
       this.loading = true;
       this.ended = false;
-      if (url.match(/\.(mp4|webm)/i)) {
-        this.video.setAttribute('src', url);
+      if ((media.ext && ['mp4', 'webm'].includes(media.ext)) || media.url.match(/\.(mp4|webm)/i)) {
+        this.video.setAttribute('src', media.url);
       }
-      if (url.match(/\.(png|jp(e)?g|gif|webp)/i)) {
-        this.image.src = url;
+      else if (media.ext || media.url.match(/\.(png|jp(e)?g|gif|webp)/i)) {
+        this.image.src = media.url;
         if (this.image.width > 0 || this.image.height > 0) {
           resolve(true);
         }

@@ -50,6 +50,7 @@ export function transformChildren(children) {
     };
     if (child.props['data-src']) {
       item.url = child.props['data-src'];
+      item.ext = child.props.ext;
     }
     media.push(item);
   });

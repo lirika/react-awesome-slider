@@ -224,9 +224,9 @@ export default class AwesomeSlider extends React.Component {
     }
   }
 
-  loadContent(active, url) {
+  loadContent(active, media) {
     return new Promise(resolve => {
-      if (this.loaded.includes(url) || !url) {
+      if (this.loaded.includes(media.url) || !media.url) {
         resolve(null);
         return;
       }
@@ -236,8 +236,8 @@ export default class AwesomeSlider extends React.Component {
         onceNextCssLayout().then(() => {
           bar.classList.add(this.classNames.barActive);
         });
-        mediaLoader.load(url).then(() => {
-          this.loaded.push(url);
+        mediaLoader.load(media).then(() => {
+          this.loaded.push(media.url);
           onceNextCssLayout().then(() => {
             onceTransitionEnd(bar).then(() => {
               resolve(bar);
@@ -370,7 +370,7 @@ export default class AwesomeSlider extends React.Component {
         element: this.slider,
       });
     }
-    this.loadContent(active, media.url).then(bar => {
+    this.loadContent(active, media).then(bar => {
       activeContentElement.classList.add(contentExitMoveClass);
       activeContentElement.classList.add(this.classNames.contentExit);
       loaderContentElement.classList.add(contentEnterMoveClass);
