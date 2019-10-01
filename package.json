@@ -1,7 +1,7 @@
 {
-  "name": "react-awesome-slider",
-  "version": "4.1.0",
-  "description": "React Awesome Slider is a 60fps performant, extendable, highly customisable, production ready React Component that renders a media (image/video) gallery slider carousel.",
+  "name": "react-awesome-slider-fw",
+  "version": "1.1.2",
+  "description": "Fork from React Awesome Slider.",
   "main": "dist/index.js",
   "author": "Rafael Caferati",
   "license": "MIT",
@@ -9,9 +9,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/rcaferati/react-awesome-slider"
-  },
-  "bugs": {
-    "url": "https://github.com/rcaferati/react-awesome-slider/issues"
   },
   "scripts": {
     "start": "webpack-dev-server -d --config webpack.demo.config.js",
