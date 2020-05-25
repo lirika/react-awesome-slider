@@ -19,19 +19,19 @@ export class MediaLoader {
     this.image.onload = () => this.resolve && this.resolve(true);
     this.image.onerror = () => this.resolve && this.resolve(false);
   }
-  load(media) {
+  load(url) {
     return new Promise(resolve => {
-      if (!media.url) {
+      if (!url) {
         resolve(true);
       }
       this.resolve = resolve;
       this.loading = true;
       this.ended = false;
-      if ((media.ext && ['mp4', 'webm'].includes(media.ext)) || media.url.match(/\.(mp4|webm)/i)) {
-        this.video.setAttribute('src', media.url);
+      if (url.match(/\.(mp4|webm)/i)) {
+        this.video.setAttribute('src', url);
       }
-      else if (media.ext || media.url.match(/\.(png|jp(e)?g|gif|webp)/i)) {
-        this.image.src = media.url;
+      if (url.match(/\.(png|jp(e)?g|gif|webp)/i)) {
+        this.image.src = url;
         if (this.image.width > 0 || this.image.height > 0) {
           resolve(true);
         }
@@ -69,21 +69,21 @@ export class MediaLoader {
       this.resolver(true);
     }
   }
-  startLoad(url) {
-    if (url.match(/\.(mp4|webm)/i)) {
+  startLoad(url, ext) {
+    if ((ext && ['mp4', 'webm'].includes(ext)) || url.match(/\.(mp4|webm)/i)) {
       this.loadVideo(url);
     }
-    if (url.match(/\.(png|jp(e)?g|gif|webp)/i)) {
+    else if (ext || url.match(/\.(png|jp(e)?g|gif|webp)/i)) {
       this.loadImage(url);
     }
   }
-  loadMultiple(urls) {
+  loadMultiple(urls, ext) {
     this.loaded = 0;
     this.toLoad = urls.length;
     return new Promise(resolve => {
       this.resolver = resolve;
       urls.forEach(url => {
-        this.startLoad(url);
+        this.startLoad(url, ext);
       });
     });
   }
