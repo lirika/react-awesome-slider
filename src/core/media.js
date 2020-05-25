@@ -6,35 +6,17 @@ export default class Media extends React.Component {
     media: PropTypes.object.isRequired,
     className: PropTypes.string.isRequired,
   };
-
   state = {};
-
   render() {
     const { media, className } = this.props;
-    const {
-      source,
-      children,
-      style,
-      loader,
-      [`data-src`]: dataSrc,
-      [`data-alt`]: dataAlt,
-      className: mediaClass,
-      onTransitionEnd,
-      onTransitionStartOut,
-      onTransitionStartIn,
-      onTransitionRequestOut,
-      onTransitionRequestIn,
-      ...extra
-    } = media;
 
     let background = null;
-
-    if (source) {
-      if (source.match(/\.(mp4|webm)/)) {
+    if (media.url) {
+      if ((media.ext && ['mp4', 'webm'].includes(media.ext)) || media.url.match(/\.(mp4|webm)/)) {
         background = (
           <video
-            title={media.title || media[`data-title`]}
-            src={source}
+            title={media.title}
+            src={media.url}
             type="video/mp4"
             controls
           />
@@ -42,18 +24,16 @@ export default class Media extends React.Component {
       } else {
         // DEFAULTS TO AN IMAGE TAG
         background = (
-          <img
-            alt={media.alt || media.title || media[`data-alt`] || null}
-            src={source}
-          />
+          <img alt={media.alt || media.title || null} src={media.url} />
         );
       }
     }
-
     return (
-      <div className={className} style={style || null} {...extra}>
+      <div className={className} style={media.style || null}>
         {background}
-        {children && <div className={mediaClass}>{media.children}</div>}
+        {media.children && (
+          <div className={media.className || null}>{media.children}</div>
+        )}
       </div>
     );
   }
